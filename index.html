@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div id="container">
+        <h2>Quote of the Day</h2>
+        <div class="line"></div>
+        <div class="content">
+            <p class="quote">
+               
+                </p>
+                <h6 class="author">
+                </h6>
+        </div>
+        <div class="buttons">
+        <div class="newQuote" onclick="getquote(api_link)">New Quote</div>
+            <div class="tweet"><i class="fa-solid fa-xmark"></i>Tweeter</div>
+        </div>
+    </div>
+    
+   <script>
+    const api_link = "https://dummyjson.com/quotes";
+    
+    // CHANGED: Use querySelector with a dot (.) for class names
+    let quote = document.querySelector('.quote');
+    let author = document.querySelector('.author');
+
+    async function getquote(url) {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            const quotesArray = data.quotes; 
+            const randomIndex = Math.floor(Math.random() * quotesArray.length);
+            
+            // This now works perfectly!
+            quote.innerHTML = quotesArray[randomIndex].quote;
+            author.innerHTML = quotesArray[randomIndex].author; 
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    
+    getquote(api_link);
+</script>
+
+</body>
+</html>
